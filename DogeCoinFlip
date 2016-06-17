@@ -1,0 +1,77 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+public class CoinflipScript : MonoBehaviour {
+    public Text WinLossDisplay;
+    public Text MoneyShow;
+    public InputField PlayerInputField;
+    public int Wager;
+    public Image WinnerDisplay;
+    public Image CounterTerroristsImage;
+    public Image TerroristsImage;
+    
+    //public GlobalController globalController;
+
+	// Use this for initialization
+	void Awake () {
+        //globalController = GameObject.Find("GlobalController").GetComponent<GlobalController>();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (MoneyShow == null)
+        {
+            Debug.Log("money show is null");
+            return;
+        }
+
+        MoneyShow.text = "DogeCoins: " + GlobalController.DogeCoins;
+	}
+    void mm()
+    {
+        WinLossDisplay.text = "Not enough coins";
+        return;
+    }
+    public void FlipCoin(string sidechosen)
+    {
+        int wager = int.Parse(PlayerInputField.text);
+        if (GlobalController.DogeCoins < Wager || Wager < 1)
+        {
+            mm();
+        }
+        int memer = Random.Range(1, 3);
+        WinLossDisplay.text = "" + memer;
+        if ( memer == 1 && sidechosen == "t")
+        {
+            GlobalController.DogeCoins += wager;
+            WinLossDisplay.text = "you win!";
+            WinnerDisplay.sprite = TerroristsImage.sprite;
+        }
+        else if (memer == 2 && sidechosen == "t")
+        {
+            GlobalController.DogeCoins -= wager;
+            WinLossDisplay.text = "you lose!?";
+            WinnerDisplay.sprite = CounterTerroristsImage.sprite;
+        }
+        else if (memer == 1 && sidechosen == "ct")
+        {
+            GlobalController.DogeCoins -= wager;
+            WinLossDisplay.text = "you lose!?";
+            WinnerDisplay.sprite = TerroristsImage.sprite;
+        }
+        else if (memer == 2 && sidechosen == "ct")
+        {
+            GlobalController.DogeCoins += wager;
+            WinLossDisplay.text = "you win!";
+            WinnerDisplay.sprite = CounterTerroristsImage.sprite;
+        }
+    }
+    public void CTCoin()
+    {
+        FlipCoin("ct");
+    }
+    public void TCoin()
+    {
+        FlipCoin("t");
+    }
+}
