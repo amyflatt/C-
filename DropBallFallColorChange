@@ -1,0 +1,60 @@
+using UnityEngine;
+using System.Collections;
+
+public class Fall : MonoBehaviour {
+    public float FlashDuration = 3;
+    public float ColorDuration = 1.0F;
+    public float FallSpeed = 10f;
+    public float FallChance = 9.9f;
+
+    private Rigidbody rigidBody;
+    private State state = State.Default;
+    Renderer rend;
+    private Color ObjectColor;
+    private Color colorEnd;
+    private enum State
+    {
+        Default,
+        Warning,
+        Falling
+    }
+	// Use this for initialization
+	void Start () {
+        rigidBody = GetComponent<Rigidbody>();
+        colorEnd = Color.red;
+
+        rend = GetComponent<Renderer>();
+        ObjectColor = rend.material.color;
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (state == State.Falling)
+        {
+            rigidBody.transform.Translate(Vector3.down * FallSpeed);
+        }
+        else if (state == State.Default)
+        {
+            var random = Random.Range(0f, 10f);
+            if(random >= FallChance)
+            {
+                state = State.Warning;
+
+            }
+        }
+        else if (State.Warning == state)
+        {
+            float lerp = Mathf.PingPong(Time.time, ColorDuration) / ColorDuration;
+            rend.material.color = Color.Lerp(ObjectColor, colorEnd, lerp);
+            if (FlashDuration <= 0)
+            {
+                state = State.Falling;
+            }
+            else
+            {
+                FlashDuration -= Time.deltaTime;
+            }
+        }
+	}
+
+}
