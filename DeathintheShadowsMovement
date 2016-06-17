@@ -1,0 +1,57 @@
+using UnityEngine;
+using System.Collections;
+
+public class Movement : MonoBehaviour
+{
+
+    public float moveSpeed;
+    public float jumpHeight;
+    public float groundCheckRadius;
+    int jumping = 0;
+    bool grounded;
+
+    public GameObject Floor;
+
+    public Transform groundCheck;
+
+    public LayerMask whatIsGround;
+
+    // Use this for initialization
+    void Start()
+    {
+    }
+    void fixedUpdate()
+    {
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.W) && jumping == 0)
+        {
+            GetComponent<Rigidbody>().velocity = new Vector2(GetComponent<Rigidbody>().velocity.x, jumpHeight);
+            jumping = 1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    void OnCollisionEnter(Collision Floor)
+    {
+        if (Floor.gameObject.tag == "Platform")
+        {
+            jumping = 0;
+        }
+    }
+
+}
