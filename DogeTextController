@@ -1,0 +1,36 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+
+
+public class DogeCoinTextController : MonoBehaviour {
+    public Text Credits;
+    public Text ScamPeople;
+    public Text GetBaiters;
+    public Text DisplayCoinsPerClick;
+    //public GlobalController globalController;
+
+    // Use this for initialization
+    void Awake()
+    {
+        //globalController = GameObject.Find("GlobalController").GetComponent<GlobalController>();
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if (Credits == null)
+        {
+            Debug.Log("credits show is null");
+            return;
+        }
+        Credits.text = "Doge Coins: " + GlobalController.DogeCoins;
+        DisplayCoinsPerClick.text = "Coins Per Click: " + GlobalController.DogeCoinPerClick;
+
+	}
+    public void Clicked()
+    {
+        GlobalController.DogeCoins += GlobalController.DogeCoinPerClick;
+    }
+ 
+}
