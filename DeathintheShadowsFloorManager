@@ -1,0 +1,48 @@
+using UnityEngine;
+using System.Collections;
+
+public class FloorManager : MonoBehaviour
+{
+
+    public GameObject Floor;
+    public bool isMeshOn;
+
+    // Use this for initialization
+    void Start()
+    {
+        isMeshOn = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (isMeshOn)
+            {
+
+                isMeshOn = false;
+            }
+            else if (!isMeshOn)
+            {
+
+                isMeshOn = true;
+            }
+        }
+        TurnOnMesh();
+    }
+    void TurnOnMesh()
+    {
+        if (isMeshOn)
+        {
+
+            Floor.GetComponent<Renderer>().enabled = true;
+        }
+        else if (!isMeshOn)
+        {
+
+            Floor.GetComponent<Renderer>().enabled = false;
+        }
+
+    }
+}
