@@ -1,0 +1,87 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour {
+    public int score = 0;
+    public float levelTimer = 180f;
+    public Text scoreLabel;
+    public Text timerLabel;
+    public GameObject explosions;
+    public bool isGameOver = false;
+
+    private float timer = 0f;
+    private List<int> highScores = new List<int>();
+
+    public void Start() {
+        timer = levelTimer;
+        LoadScores();
+    }
+
+	public void Update () {
+        if (isGameOver) {
+            return;
+        }
+        scoreLabel.text = "Score " + score.ToString();
+        timer -= Time.deltaTime;
+        if(timer <= 0f) {
+            GameOver();
+            return;
+        }
+        timerLabel.text = ((int)timer).ToString() + " secs";
+    }
+
+    private void GameOver() {
+        CheckForHighScore();
+        SaveScores();
+        explosions.SetActive(true);
+        Invoke("LoadHighScores", 3f);
+        isGameOver = true;
+    }
+
+    private void LoadHighScores() { 
+        SceneManager.LoadScene(2);
+    }
+
+    private void LoadScores() {
+        for(int index = 0; index < 10; index++) {
+            highScores.Add(PlayerPrefs.GetInt("highscore_" + index, 0));
+        }
+    }
+
+    private void CheckForHighScore() {
+        highScores.Add(score);
+        SortScores();
+        if (highScores.Count > 10) {
+            highScores.RemoveAt(10);
+        }
+    }
+
+    private void SaveScores() {
+        for (int index = 0; index < 10; index++) {
+             PlayerPrefs.SetInt("highscore_" + index, highScores[index]);
+        }
+    }
+
+    private void SortScores() {
+        highScores.Sort();
+        int temp = 0;
+        temp = highScores[10];
+        highScores[10] = highScores[0];
+        highScores[0] = temp;
+        temp = highScores[9];
+        highScores[9] = highScores[1];
+        highScores[1] = temp;
+        temp = highScores[8];
+        highScores[8] = highScores[2];
+        highScores[2] = temp;
+        temp = highScores[7];
+        highScores[7] = highScores[3];
+        highScores[3] = temp;
+        temp = highScores[6];
+        highScores[6] = highScores[4];
+        highScores[4] = temp;
+   }
+}
