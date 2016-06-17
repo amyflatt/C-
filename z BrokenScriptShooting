@@ -1,0 +1,71 @@
+using UnityEngine;
+using System.Collections;
+
+public class Shooting : MonoBehaviour {
+
+    public int damagePerShot = 20;
+    public float timeBetweenBullets = 0.15f;
+    public float range = 100f;
+
+
+    float timer;
+    Ray shootRay;
+    RaycastHit shootHit;
+    int shootableMask;
+    ParticleSystem gunParticles;
+    LineRenderer gunLine;
+    AudioSource gunAudio;
+    Light gunLight;
+    float effectsDisplayTime = 0.2f;
+    Light facelight;
+
+    // Use this for initialization
+    void Awake()
+    {
+        shootableMask = LayerMask.GetMask("Shootable");
+        gunParticles = GetComponent<ParticleSystem>();
+        gunLine = GetComponent<LineRenderer>();
+        gunAudio = GetComponent<AudioSource>();
+        gunLight = GetComponent<Light>();
+        facelight = GetComponentInChildren<Light>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+        {
+            Shoot();
+        }
+
+        if (timer >= timeBetweenBullets * effectsDisplayTime)
+        {
+           
+        }
+    }
+        void Shoot()
+    {
+            timer = 0f;
+
+           
+
+           
+
+           
+
+            gunLine.enabled = true;
+            gunLine.SetPosition(0, transform.position);
+
+            shootRay.origin = transform.position;
+            shootRay.direction = transform.forward;
+
+            
+            
+            {
+                gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+            }
+        }
+    }
+
