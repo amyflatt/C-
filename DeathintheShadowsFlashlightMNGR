@@ -1,0 +1,48 @@
+using UnityEngine;
+using System.Collections;
+
+public class FlashlightManager : MonoBehaviour
+{
+
+    public GameObject Flashlight;
+    public bool isMeshOn;
+
+    // Use this for initialization
+    void Start()
+    {
+        isMeshOn = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (isMeshOn)
+            {
+
+                isMeshOn = false;
+            }
+            else if (!isMeshOn)
+            {
+
+                isMeshOn = true;
+            }
+        }
+        TurnOnMesh();
+    }
+    void TurnOnMesh()
+    {
+        if (isMeshOn)
+        {
+
+            Flashlight.GetComponent<Renderer>().enabled = true;
+        }
+        else if (!isMeshOn)
+        {
+
+            Flashlight.GetComponent<Renderer>().enabled = false;
+        }
+
+    }
+}
