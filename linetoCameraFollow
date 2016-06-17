@@ -1,0 +1,4 @@
+void update
+{
+ Transform.up =Vector3.up;
+}
