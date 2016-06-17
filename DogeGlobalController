@@ -1,0 +1,19 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
+public class GlobalController : MonoBehaviour
+{
+    static public int DogeCoins = 0;
+    static public int DogeCoinPerClick = 1;
+    static public int ScammerCost = 20;
+    static public int ScammerCostInterger = 2;
+    static public int BaiterCost = 20;
+    static public int BaiterCostInterger = 3;
+    static public int BaiterBoost = 1;
+    static public Ima
+    public void Start()
+    {
+        SceneManager.LoadScene("Clicking", LoadSceneMode.Additive);
+    }
+}
