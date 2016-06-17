@@ -1,0 +1,28 @@
+using UnityEngine;
+using System.Collections;
+
+namespace CompleteProject
+{
+
+    public class CameraFollowPlayer : MonoBehaviour
+    {
+        public Transform target;     //target of camera
+        public float smoothing = 5f; //speed of camera
+
+        Vector3 offset;
+
+        // Use this for initialization
+        void Start()
+        {
+            offset = transform.position - target.position;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            Vector3 targetCamPos = target.position + offset;
+
+            transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+        }
+    }
+}
