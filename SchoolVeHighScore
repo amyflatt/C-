@@ -1,0 +1,19 @@
+using UnityEngine;
+using System.Collections;
+
+public class Coin : MonoBehaviour {
+    public int value = 100;
+
+    private GameManager gameManager;
+
+    public void Start() {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
+
+    public void OnTriggerEnter(Collider other) {
+        if (other.tag == "Player") {
+            gameManager.score += value;
+            Destroy(gameObject);
+        }
+    }
+}
