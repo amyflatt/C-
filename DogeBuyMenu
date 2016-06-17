@@ -1,0 +1,37 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+
+
+public class BuyMenuScript : MonoBehaviour {
+    // Use this for initialization
+    public Text ScamPeopleText;
+    public Text BaitPeopleText;
+    void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        ScamPeopleText.text = "Scam People(" + GlobalController.ScammerCost + ")";
+        BaitPeopleText.text = "Bait People(" + GlobalController.BaiterCost + ")";
+    }
+    public void UpgradeScammer()
+    {
+        if (GlobalController.ScammerCost <= GlobalController.DogeCoins)
+        {
+            GlobalController.DogeCoins -= GlobalController.ScammerCost;
+            GlobalController.DogeCoinPerClick += GlobalController.BaiterBoost;
+            GlobalController.ScammerCost *= GlobalController.ScammerCostInterger;
+        }
+    }
+    public void GetBaitersClicked()
+    {
+        if (GlobalController.BaiterCost <= GlobalController.DogeCoins)
+        {
+            GlobalController.DogeCoins -= GlobalController.BaiterCost;
+            GlobalController.BaiterBoost += 1;
+            GlobalController.BaiterCost *= GlobalController.BaiterCostInterger;
+        }
+    }
+}
